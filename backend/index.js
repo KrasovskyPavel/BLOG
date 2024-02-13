@@ -59,7 +59,9 @@ app.post("/upload", upload.single("image"), (req, res) => {
   });
 });
 
+app.get("/tags", PostController.getLastTags);
 app.get("/posts", PostController.getAll);
+app.get("/post/tags", PostController.getLastTags);
 app.get("/posts/:id", PostController.getOne);
 app.post(
   "/posts",
