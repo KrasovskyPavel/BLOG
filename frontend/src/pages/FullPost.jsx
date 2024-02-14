@@ -1,14 +1,19 @@
 import React, { useEffect, useState } from "react";
 
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
 import axios from "../axios";
 import { Post } from "../components/Post";
 import { Index } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
 import { useParams } from "react-router-dom";
+import { selectIsAuth } from "../redux/slices/auth";
 
 export const FullPost = () => {
   const [data, setData] = useState();
   const [isLoading, setLoading] = useState(true);
+
+  const isAuth = useSelector(selectIsAuth);
 
   const { id } = useParams();
 
@@ -24,6 +29,10 @@ export const FullPost = () => {
         alert("Ошибка при получении статьи");
       });
   }, []);
+
+  if (!isAuth) {
+    return <Navigate to="/" />;
+  }
 
   if (isLoading) {
     return <Post isLoading={isLoading} />;

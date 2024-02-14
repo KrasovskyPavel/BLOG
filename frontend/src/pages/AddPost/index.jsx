@@ -4,8 +4,11 @@ import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import SimpleMDE from "react-simplemde-editor";
 
+import { Navigate } from "react-router-dom";
 import "easymde/dist/easymde.min.css";
 import styles from "./AddPost.module.scss";
+import { useSelector } from "react-redux";
+import { selectIsAuth } from "../../redux/slices/auth";
 
 export const AddPost = () => {
   const [value, setValue] = React.useState("");
@@ -28,6 +31,9 @@ export const AddPost = () => {
     }),
     []
   );
+
+  const isAuth = useSelector(selectIsAuth);
+  console.log(isAuth);
 
   return (
     <Paper style={{ padding: 30 }}>
