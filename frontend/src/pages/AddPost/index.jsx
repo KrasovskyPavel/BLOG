@@ -1,19 +1,21 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import SimpleMDE from "react-simplemde-editor";
 
 import { Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import "easymde/dist/easymde.min.css";
 import styles from "./AddPost.module.scss";
-import { useSelector } from "react-redux";
 import { selectIsAuth } from "../../redux/slices/auth";
 
 export const AddPost = () => {
-  const [value, setValue] = React.useState("");
+  const isAuth = useSelector(selectIsAuth);
+  const [value, setValue] = useState("");
 
-  const onChange = React.useCallback((value) => {
+  const imageURL = "";
+  const onChange = useCallback((value) => {
     setValue(value);
   }, []);
 
@@ -32,8 +34,11 @@ export const AddPost = () => {
     []
   );
 
-  const isAuth = useSelector(selectIsAuth);
   console.log(isAuth);
+
+  if (!isAuth) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Paper style={{ padding: 30 }}>

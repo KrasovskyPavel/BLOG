@@ -5,6 +5,7 @@ import styles from "./Header.module.scss";
 import Container from "@mui/material/Container";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectIsAuth } from "../../redux/slices/auth";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const dispatch = useDispatch();
@@ -21,15 +22,15 @@ export const Header = () => {
     <div className={styles.root}>
       <Container maxWidth="lg">
         <div className={styles.inner}>
-          <a className={styles.logo} href="/">
+          <Link className={styles.logo} to="/">
             <div>BLOG</div>
-          </a>
+          </Link>
           <div className={styles.buttons}>
             {isAuth ? (
               <>
-                <a href="/add-post">
+                <Link to="/add-post">
                   <Button variant="contained">Написать статью</Button>
-                </a>
+                </Link>
                 <Button
                   onClick={onClickLogout}
                   variant="contained"
@@ -40,12 +41,12 @@ export const Header = () => {
               </>
             ) : (
               <>
-                <a href="/login">
+                <Link to="/login">
                   <Button variant="outlined">Войти</Button>
-                </a>
-                <a href="/register">
+                </Link>
+                <Link to="/register">
                   <Button variant="contained">Создать аккаунт</Button>
-                </a>
+                </Link>
               </>
             )}
           </div>
