@@ -8,6 +8,7 @@ import { Index } from "../components/AddComment";
 import { CommentsBlock } from "../components/CommentsBlock";
 import { useParams } from "react-router-dom";
 import { selectIsAuth } from "../redux/slices/auth";
+import Markdown from "react-markdown";
 
 export const FullPost = () => {
   const [data, setData] = useState();
@@ -38,15 +39,17 @@ export const FullPost = () => {
     return <Post isLoading={isLoading} />;
   }
 
+  console.log(data);
+
   return (
     <>
       <Post
         id={data._id}
         title={data.title}
-        imageUrl={data.imageUrl}
+        imageUrl={data.imageUrl ? `http://localhost:3333${data.imageUrl}` : ""}
         user={{
-          avatarUrl: data.avatarUrl,
-          fullName: data.fullName,
+          avatarUrl: data.user.avatarUrl,
+          fullName: data.user.fullName,
         }}
         createdAt={data.createdAt}
         viewsCount={data.viewsCount}
@@ -54,7 +57,7 @@ export const FullPost = () => {
         tags={data.tags}
         isFullPost
       >
-        <p>{data.text}</p>
+        <Markdown children={data.text}>{data.text}</Markdown>
       </Post>
       <CommentsBlock
         items={[

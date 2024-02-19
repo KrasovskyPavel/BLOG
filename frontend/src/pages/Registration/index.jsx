@@ -41,8 +41,6 @@ export const Registration = () => {
     }
   };
 
-  console.log(isAuth);
-
   if (isAuth) {
     return <Navigate to="/" />;
   }

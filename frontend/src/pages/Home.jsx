@@ -22,6 +22,8 @@ export const Home = () => {
     dispath(fetchTags());
   }, []);
 
+  console.log(posts);
+
   return (
     <>
       <Tabs
@@ -41,7 +43,9 @@ export const Home = () => {
               <Post
                 id={obj._id}
                 title={obj.title}
-                imageUrl={obj.imageUrl}
+                imageUrl={
+                  obj.imageUrl ? `http://localhost:3333${obj.imageUrl}` : ""
+                }
                 user={obj.user}
                 createdAt={obj.createdAt}
                 viewsCount={obj.viewsCount}
@@ -58,14 +62,14 @@ export const Home = () => {
             items={[
               {
                 user: {
-                  fullName: "Вася Пупкин",
+                  fullName: "Первый пользователь",
                   avatarUrl: "https://mui.com/static/images/avatar/1.jpg",
                 },
                 text: "Это тестовый комментарий",
               },
               {
                 user: {
-                  fullName: "Иван Иванов",
+                  fullName: "Второй пользователь пользователь",
                   avatarUrl: "https://mui.com/static/images/avatar/2.jpg",
                 },
                 text: "When displaying three lines or more, the avatar is not aligned at the top. You should set the prop to align the avatar at the top",

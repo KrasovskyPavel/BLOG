@@ -38,7 +38,7 @@ export const getOne = async (req, res) => {
 
     console.log(postId);
 
-    await PostModel.findOneAndUpdate(
+    const post = await PostModel.findOneAndUpdate(
       {
         _id: postId,
       },
@@ -46,27 +46,16 @@ export const getOne = async (req, res) => {
         $inc: { viewsCount: 1 },
       },
       {
-        returnDocument: "after",
+        new: "true",
       }
-    )
-      .then((doc) => {
-        if (!doc) {
-          return res.status(404).json({
-            message: "Запись не найдена",
-          });
-        }
-
-        res.json(doc);
-      })
-      .catch((err) => {
-        if (err) {
-          console.log(err);
-
-          return res.status(500).json({
-            message: "Ошибка записи",
-          });
-        }
+    ).populate({ path: "user", select: ["fullName", "avatarUrl"] });
+    if (!post) {
+      return res.status(404).json({
+        message: "Запись не найдена",
       });
+    }
+
+    res.json(post);
   } catch (err) {
     console.log(err);
     res.status(500).json({
@@ -115,7 +104,7 @@ export const create = async (req, res) => {
     const doc = new PostModel({
       title: req.body.title,
       text: req.body.text,
-      tags: req.body.tags,
+      tags: req.body.tags.split(","),
       imageUrl: req.body.imageUrl,
       user: req.userId,
     });
@@ -144,7 +133,7 @@ export const update = async (req, res) => {
         text: req.body.text,
         imageUrl: req.body.imageUrl,
         user: req.userId,
-        tags: req.body.tags,
+        tags: req.body.tags.split(","),
       }
     );
 
